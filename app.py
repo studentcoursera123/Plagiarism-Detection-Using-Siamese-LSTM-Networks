@@ -64,7 +64,7 @@ class SiameseLSTM(nn.Module):
 # --------------------------
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = SiameseLSTM(vocab_size=5000, embedding_dim=128, hidden_dim=256, max_len=100)
-model.load_state_dict(torch.load(r"E:\Plagarism Checker\best_model(1).pth", map_location=device))
+model.load_state_dict(torch.load("best_model.pth", map_location=device))
 model.to(device)
 model.eval()
 
