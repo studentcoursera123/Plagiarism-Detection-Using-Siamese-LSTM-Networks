@@ -63,10 +63,19 @@ class SiameseLSTM(nn.Module):
 # Load Trained Model
 # --------------------------
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# Initialize the model
 model = SiameseLSTM(vocab_size=5000, embedding_dim=128, hidden_dim=256, max_len=100)
-model.load_state_dict(torch.load("best_model.pth", map_location=device))
-model.to(device)
-model.eval()
+
+# Try loading the model and handle potential errors
+try:
+    # Load the model's state dict
+    model.load_state_dict(torch.load("best_model.pth", map_location=device))
+    model.to(device)
+    model.eval()
+except Exception as e:
+    st.error(f"❌ Error loading model: {e}")
+    st.stop()
 
 # --------------------------
 # Streamlit UI
@@ -74,15 +83,22 @@ model.eval()
 st.title("Plagiarism Detection App")
 st.write("Enter two sentences to check for plagiarism probability.")
 
+# Input fields for the sentences
 s1 = st.text_input("Sentence 1")
 s2 = st.text_input("Sentence 2")
 
 if st.button("Check"):
-    with torch.no_grad():
-        e1 = encode(s1)
-        e2 = encode(s2)
-        p1 = pad_sequence(e1).to(device)
-        p2 = pad_sequence(e2).to(device)
-        output = model(p1, p2)
-        prob = output.item()
-        st.success(f"Plagiarism Probability: **{prob*100:.2f}%**")
+    if not s1.strip() or not s2.strip():
+        st.warning("⚠️ Please enter both sentences.")
+    else:
+        # Process the input sentences
+        with torch.no_grad():
+            e1 = encode(s1)
+            e2 = encode(s2)
+            p1 = pad_sequence(e1).to(device)
+            p2 = pad_sequence(e2).to(device)
+            output = model(p1, p2)
+            prob = output.item()
+
+            # Display the plagiarism probability
+            st.success(f"Plagiarism Probability: **{prob*100:.2f}%**")
