@@ -1,0 +1,17 @@
+✅ Highly Similar / Paraphrased (Should return high similarity):
+S1: "The quick brown fox jumps over the lazy dog."
+⦁	S2: "A fast, brown fox leaps over a lazy dog."
+S1: "She completed her homework before dinner."
+⦁	S2: "Before eating dinner, she finished her assignments."
+S1: "Global warming is a major environmental concern today."
+⦁	S2: "Climate change is a significant issue affecting the environment nowadays."
+⚠️ Moderately Similar (Should return medium similarity):
+S1: "He is reading a book about artificial intelligence."
+⦁	S2: "She is studying a course on machine learning."
+S1: "The car stopped suddenly in the middle of the road."
+⦁	S2: "The vehicle came to a halt abruptly on the highway."
+❌ Not Similar (Should return low similarity):
+S1: "I love playing basketball on weekends."
+⦁	S2: "The capital of France is Paris."
+S1: "He went to the store to buy milk and bread."
+⦁	S2: "The sun is a massive ball of burning gas."
